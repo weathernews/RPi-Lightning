@@ -203,7 +203,7 @@ $(function(){
 	document.getElementById("netmask").value = r.netmask;
 	document.getElementById("gateway").value = r.gateway;
 	document.getElementById("proxy").value = r.proxy;
-	componentHandler.upgradeElement( document.getElementById("ssid") );
+	document.getElementById("ssid").classList.add('is-dirty');
     });
 });
 
