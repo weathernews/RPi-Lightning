@@ -1,10 +1,12 @@
 #! /usr/bin/env perl
+use File::Basename;
+$mypath = dirname($0);
 use CGI;
 $q = new CGI;
 $p = $q->Vars;
 print $q->header(-content_type => "application/json");
 if ($p->{'ssid'} ne "") {
-    open(JSON,">network.json");
+    open(JSON,">$mypath/network.json");
     print JSON << "+++";
 {
 "ssid":"$p->{'ssid'}",
