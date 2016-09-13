@@ -35,28 +35,28 @@ update_config=1
 #
 # dhcpcd.conf
 #
-if (($db{"addrtype"} eq "manual") && ($db{"ipaddr"} ne "")) {
-    $fn = "$mypath/config/wifi_client/etc/dhcpcd.conf";
-    if (open(F,"<",$fn)){
-	$buf = "";
-	while (<F>){
-	    last if (/# AUTOMATIC CONFIGURATION BELOW/);
-	    $buf .= $_;
-	}
-	close(F);
+$fn = "$mypath/config/wifi_client/etc/dhcpcd.conf";
+if (open(F,"<",$fn)){
+    $buf = "";
+    while (<F>){
+	last if (/# AUTOMATIC CONFIGURATION BELOW/);
+	$buf .= $_;
+    }
+    close(F);
 
+    if (($db{"addrtype"} eq "manual") && ($db{"ipaddr"} ne "")) {
 	$buf .= << "+++";
 interface wlan0
 static ip_address=$db{ipaddr}/24
 static routers=$db{gateway}
 +++
 	;
-	open(F,">",$fn) || die $!;
-	print F $buf;
-	close(F);
     }
-
 }
+open(F,">",$fn) || die $!;
+print F $buf;
+close(F);
+
 #
 # proxy
 #
