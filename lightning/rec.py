@@ -8,6 +8,12 @@ import csv
 from datetime import datetime
 import requests
 import sys
+import os.path
+mypath = os.path.dirname(sys.argv[0])
+if mypath == "":
+        mypath = "."
+else:
+        sys.path.append(mypath)
 
 LED = 25
 GPIO.setmode(GPIO.BCM)
@@ -52,7 +58,11 @@ def handle_interrupt(channel):
 		writer.writerow(buffer)
                 url = "http://labs.weathernews.jp/hack/lightning/ingest.cgi?id=ltng1001&distance=" + str(distance)  + "&energy=" + str(energy)
                 print (url)
-                resp = requests.get(url)
+                if os.path.exists(mypath + "/proxy.py"):
+                        from proxy import proxies
+                        resp = requests.get(url,proxies=proxies)
+                else:
+                        resp = requests.get(url)
 	outputfile.close()
 
 #ここから始まり

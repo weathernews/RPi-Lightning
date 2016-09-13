@@ -61,10 +61,15 @@ static routers=$db{gateway}
 # proxy
 #
 if ($db{"proxy"} ne "") {
-    open(F,">", "$mypath/../lightning/proxy.txt");
-    print F $db{"proxy"};
+    open(F,">", "$mypath/../lightning/proxy.py");
+    print F << "+++";
+proxies = {
+  "http":"$db{'proxy'}",
+}
++++
+    ;
     close(F);
 }
 else {
-    unlink("$mypath/../lightning/proxy.txt");
+    unlink("$mypath/../lightning/proxy.py");
 }
