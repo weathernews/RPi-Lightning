@@ -77,6 +77,7 @@ GPIO.setup(IRQ, GPIO.IN)
 GPIO.add_event_detect(IRQ, GPIO.RISING, callback=handle_interrupt)
 now = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
 
+filename = mypath + '/spool/' + datetime.now().strftime("%Y-%m-%d") + '.lightning.txt'
 outputfile = open(filename, "a")
 writer = csv.writer(outputfile)
 distance = sensor.get_distance()

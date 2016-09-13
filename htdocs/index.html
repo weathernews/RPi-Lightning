@@ -101,7 +101,7 @@
 	  <div class="mdl-cell mdl-cell--12-col">
 	    <div class="docs-text-styling component-title">
 	      <p>システムを再起動します。</p>
-	      <form action="restart.cgi" method="POST">
+	      <form action="#i" method="POST" onsubmit="restart();return false;">
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">再起動</button>
 	      </form>
 	    </div>
@@ -188,6 +188,11 @@
 	    }
 	});
     }
+
+function restart(){
+    $.get('restart.cgi');
+    location.hash = '';
+}
 
 $(function(){
     $.getJSON('network.json',function(r){

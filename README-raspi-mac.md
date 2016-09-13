@@ -200,3 +200,14 @@ export APACHE_RUN_GROUP=pi
 - sites-enabled/000-default.conf にて
 `  DocumentRoot /home/pi/Pi-Lightning/htdocs`  
 とする
+
+
+## 9. pip および requests のインストール
+
+```
+
+# curl -O 'https://bootstrap.pypa.io/get-pip.py'
+# python get-pip.py
+# pip install requests
+
+```
