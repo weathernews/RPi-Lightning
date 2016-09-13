@@ -90,7 +90,8 @@
 	<section id="about-section" class="mdl-components__page mdl-grid">
 	  <div class="mdl-cell mdl-cell--12-col">
 	    <div class="docs-text-styling component-title">
-	      <p>Lighting sensor 0.1</p>
+              <p>Lighting sensor 0.1</p>
+              <p>Serial : <span id="serial"></span></p>
 	      <p>Weathernews Inc.</p>
 	    </div>
 	  </div>
@@ -201,6 +202,7 @@ $(function(){
 	if (r.addrtype == "manual") {
 	    document.getElementById("option-2").parentNode.MaterialRadio.check();
 	}
+	document.getElementById("serial").innerHTML = r.serial;
     });
 });
 
