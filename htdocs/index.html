@@ -191,19 +191,20 @@
 
 $(function(){
     $.getJSON('network.json',function(r){
-	document.getElementById("ssid").value = r.ssid;
-	document.getElementById("passphrase").value = r.passphrase;
+	for (var e in ['ssid','passphrase','ipaddr','netmask','gateway','proxy']) {
+	    if (r[e] != "") {
+		document.getElementById(e).value = r.ssid;
+		document.getElementById(e).parentNode.classList.add('is-dirty');
+	    }
+	}
 	if (r.addrtype != "manual") {
 	    document.getElementById("option-1").checked = true;
+	    document.getElementById("option-2").checked = false;
 	}
 	else {
-	    document.getElementById("option-2").checked = true;	    
+	    document.getElementById("option-2").checked = true;
+	    document.getElementById("option-1").checked = false;
 	}
-	document.getElementById("ipaddr").value = r.ipaddr;
-	document.getElementById("netmask").value = r.netmask;
-	document.getElementById("gateway").value = r.gateway;
-	document.getElementById("proxy").value = r.proxy;
-	document.getElementById("ssid").parentNode.classList.add('is-dirty');
     });
 });
 
