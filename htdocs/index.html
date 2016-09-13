@@ -198,11 +198,7 @@ $(function(){
 		document.getElementById(e).parentNode.classList.add('is-dirty');
 	    }
 	}
-	if (r.addrtype != "manual") {
-//	    document.getElementById("option-1").checked = true;
-//	    document.getElementById("option-2").checked = false;
-	}
-	else {
+	if (r.addrtype == "manual") {
 	    document.getElementById("option-2").parentNode.MaterialRadio.check();
 	}
     });
