@@ -39,8 +39,8 @@ $fn = "$mypath/config/wifi_client/etc/dhcpcd.conf";
 if (open(F,"<",$fn)){
     $buf = "";
     while (<F>){
-	last if (/# AUTOMATIC CONFIGURATION BELOW/);
 	$buf .= $_;
+	last if (/# AUTOMATIC CONFIGURATION BELOW/);
     }
     close(F);
 
