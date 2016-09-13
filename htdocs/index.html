@@ -191,7 +191,9 @@
 
 $(function(){
     $.getJSON('network.json',function(r){
-	for (var e in ['ssid','passphrase','ipaddr','netmask','gateway','proxy']) {
+	var el = ['ssid','passphrase','ipaddr','netmask','gateway','proxy']
+	for (var i in el) {
+	    var e = el[i];
 	    if (r[e] != "") {
 		document.getElementById(e).value = r[e];
 		document.getElementById(e).parentNode.classList.add('is-dirty');
