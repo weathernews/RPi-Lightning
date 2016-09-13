@@ -182,7 +182,6 @@
 	    'gateway':form.gateway.value,
 	    'proxy':form.proxy.value
 	},function(r){
-	    console.log(r);
 	    if (r.stat == "OK") {
 		document.getElementById('respmsg').innerHTML = '保存しました。';
 	    }
@@ -200,12 +199,11 @@ $(function(){
 	    }
 	}
 	if (r.addrtype != "manual") {
-	    document.getElementById("option-1").checked = true;
-	    document.getElementById("option-2").checked = false;
+//	    document.getElementById("option-1").checked = true;
+//	    document.getElementById("option-2").checked = false;
 	}
 	else {
-	    document.getElementById("option-2").checked = true;
-	    document.getElementById("option-1").checked = false;
+	    document.getElementById("option-2").parentNode.MaterialRadio.check();
 	}
     });
 });
