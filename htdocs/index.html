@@ -162,8 +162,7 @@
 	      </div>
 
 
-	    
-	    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">保存</button><span id="respmsg">保存しました。</span>
+	    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">保存</button><span id="respmsg"></span>
           </form>
 	</section>
       </main>
@@ -188,7 +187,25 @@
 		document.getElementById('respmsg').innerHTML = '保存しました。';
 	    }
 	});
-      }
+    }
+
+$(function(){
+    $.getJSON('network.json',function(r){
+	document.getElementById("ssid").value = r.ssid;
+	document.getElementById("passphrase").value = r.passphrase;
+	if (r.addrtype != "manual") {
+	    document.getElementById("option-1").checked = true;
+	}
+	else {
+	    document.getElementById("option-2").checked = true;	    
+	}
+	document.getElementById("ipaddr").value = r.ipaddr;
+	document.getElementById("netmask").value = r.netmask;
+	document.getElementById("gateway").value = r.gateway;
+	document.getElementById("proxy").value = r.proxy;
+    });
+});
+
     </script>
   </body>
 </html>
