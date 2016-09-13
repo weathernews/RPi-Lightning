@@ -193,7 +193,7 @@ $(function(){
     $.getJSON('network.json',function(r){
 	for (var e in ['ssid','passphrase','ipaddr','netmask','gateway','proxy']) {
 	    if (r[e] != "") {
-		document.getElementById(e).value = r.ssid;
+		document.getElementById(e).value = r[e];
 		document.getElementById(e).parentNode.classList.add('is-dirty');
 	    }
 	}
