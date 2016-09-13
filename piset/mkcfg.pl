@@ -29,7 +29,7 @@ update_config=1
 +++
 ;
     close(F);
-    system("wpa_supplicant $db{ssid} $db{passphrase} >> $fn");
+    system("wpa_passphrase $db{'ssid'} $db{'passphrase'} >> $fn");
 }
 
 #
