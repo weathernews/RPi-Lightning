@@ -86,9 +86,13 @@ buffer = [now, "Waiting for lightning",  str(distance)  , str(energy) ]
 writer.writerow(buffer)
 outputfile.close()
 
-while True:
-	time.sleep(1.0)
-	GPIO.output(LED, False)
-        if GPIO.input(RST):
-                os.system(mypath + "../piset/config/set_config.sh");
-                os.system("reboot");
+try:
+        while True:
+                time.sleep(2.0)
+                GPIO.output(LED, False)
+                if GPIO.input(RST):
+                        os.system(mypath + "../piset/config/set_config.sh");
+                        os.system("reboot");
+except KeyboardInterrupt:
+        GPIO.cleanup()
+
