@@ -163,7 +163,7 @@
 
 
 	    
-	    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">保存</button>
+	    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">保存</button><span id="respmsg">保存しました。</span>
           </form>
 	</section>
       </main>
@@ -173,12 +173,21 @@
     <script src="mdl/material.min.js"></script>
     <script src="js/jquery-3.1.0.min.js"></script>
     <script>
-      function network_save(form){
-          var ssid = form.ssid.value;
-          var pass = form.passphrase.value;
-          $.post("network_save.cgi",{'ssid':ssid,'passphrase':pass},function(r){
-              console.log(r);
-      });
+    function network_save(form){
+	$.post("network_save.cgi",{
+	    'ssid':form.ssid.value,
+	    'passphrase':form.passphrase.value,
+	    'addrtype':form.addrtype.value,
+	    'ipaddr':form.ipaddr.value,
+	    'netmask':form.netmask.value,
+	    'gateway':form.gateway.value,
+	    'proxy':form.proxy.value
+	},function(r){
+	    console.log(r);
+	    if (r.stat == "OK") {
+		document.getElementById('respmsg').innerHTML = '保存しました。';
+	    }
+	});
       }
     </script>
   </body>

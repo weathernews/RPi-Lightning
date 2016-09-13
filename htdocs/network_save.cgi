@@ -1,12 +1,22 @@
 #! /usr/bin/env perl
 use CGI;
 $q = new CGI;
+$p = $q->Vars;
 print $q->header(-content_type => "application/json");
-$ssid = $q->param("ssid");
-$pass = $q->param("passphrase");
-if ($ssid ne "") {
+if ($p->{'ssid'} ne "") {
     open(JSON,">network.json");
-    print JSON qq({"ssid":"$ssid","passphrase":"$pass"});
+    print JSON << "+++";
+{
+"ssid":"$p->{'ssid'}",
+"passphrase":"$p->{'passphrase'}",
+"addrtype":"$p->{'addrtype'}",
+"ipaddr":"$p->{'ipaddr'}",
+"netmask":"$p->{'netmask'}",
+"gateway":"$p->{'gateway'}",
+"proxy":"$p->{'proxy'}"
+}
++++
+	;
     close(JSON);
     print qq({"stat":"OK"});
 }
