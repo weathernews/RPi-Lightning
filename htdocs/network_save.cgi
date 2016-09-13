@@ -19,7 +19,11 @@ if ($p->{'ssid'} ne "") {
 }
 +++
 	;
-    close(JSON);
+close(JSON);
+
+system("perl $mypath/../piset/mkcfg.pl");
+system("sudo $mypath/../piset/config/set_config.sh wifi_client");
+
     print qq({"stat":"OK"});
 }
 else {
