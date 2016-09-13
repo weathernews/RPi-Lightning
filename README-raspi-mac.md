@@ -167,3 +167,30 @@ http://www.ishikawa-lab.com/RasPi_lightning.html
 
 `% sudo apt-get -y install python-smbus i2c-tools python-rpi.gpio`
 
+`% sudo apt-get -y install dnsmasq hostapd`
+
+
+8. Apache の設定
+
+`% sudo apt-get -y install apache2`
+
+- /etc/apache2 以下にて作業
+- apache2.conf に以下追加
+```
+
+<Directory /home/pi/Pi-Lightning/htdocs>
+	   Options Indexes FollowSymLinks ExecCGI
+	   AllowOverride All
+	   Require all granted
+</Directory>
+
+```
+- envvars にて
+export APACHE_RUN_USER=pi
+export APACHE_RUN_GROUP=pi
+
+- mods-available/cgid.* を mods-enabled 以下にシンボリックリンク
+- mods-enabled/mime.conf で、AddHandler cgi-script .cgi の行を有効にする。
+- sites-enabled/000-default.conf にて
+`  DocumentRoot /home/pi/Pi-Lightning/htdocs`  
+とする

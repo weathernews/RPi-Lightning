@@ -8,7 +8,7 @@ Raspberry Pi の初期設定については、[README-raspi-mac.md](https://gith
 
 2. AS3935 雷センサーと、 Raspberry Pi の接続
 
- [htdocs/img/wire.png](https://github.com/weathernews/Pi-Lightning/blob/master/htdocs/img/wire.png)
+ ![配線図](https://github.com/weathernews/Pi-Lightning/blob/master/htdocs/img/wire.png)
 
 
  
