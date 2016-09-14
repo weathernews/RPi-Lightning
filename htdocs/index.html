@@ -72,7 +72,6 @@
     <a href="#restart-section" class="mdl-components__link mdl-component restart">
       <span class="mdl-components__link-text">Restart</span>
     </a>
-    <div class="mdl-layout-spacer"></div>
     <a href="#help-section" class="mdl-components__link mdl-component help">
       <span class="mdl-components__link-text">Help</span>
     </a>
@@ -84,13 +83,12 @@
       <main class="mdl-layout__content mdl-color--grey-100 mdl-components__pages">
 
 	<section id="index-section" class="mdl-components-index mdl-components__page">
-
 	</section>
 
-	<section id="help-section" class="mdl-components__page">
+	<section id="help-section" class="mdl-components__page mdl-grid">
 	  <div class="mdl-cell mdl-cell--12-col">
 	    <div class="docs-text-styling component-title">
-	      <p>Help</p>
+	      <h3>Help</h3>
 	    </div>
 	  </div>
 	</section>
@@ -98,6 +96,8 @@
         <section id="about-section" class="mdl-components__page mdl-grid">
 	  <div class="mdl-cell mdl-cell--12-col">
 	    <div class="docs-text-styling component-title">
+              <h3>About</h3>
+	    </div>
               <p>Lighting sensor 0.1 BETA</p>
               <p>Serial : <span id="serial"></span></p>
 	      <p>Weathernews Inc.</p>
@@ -108,16 +108,20 @@
 	<section id="restart-section" class="mdl-components__page mdl-grid">
 	  <div class="mdl-cell mdl-cell--12-col">
 	    <div class="docs-text-styling component-title">
-	      <p>システムを再起動します。</p>
+              <h3>Restart</h3>
+	    </div>
+    <p>システムを再起動します。</p>
 	      <form action="#i" method="POST" onsubmit="restart();return false;">
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">再起動</button>
 	      </form>
-	    </div>
 	  </div>
 	</section>
 	
 	<section id="network-section" class="mdl-components__page mdl-grid">
 	  <div class="mdl-cell mdl-cell--12-col">
+	    <div class="docs-text-styling component-title">
+              <h3>Network</h3>
+	    </div>
 	      <p>ネットワークのパラメーターを設定してください。</p>
 
 	    <form action="#" method="POST" onsubmit="network_save(this);return false;">
