@@ -20,10 +20,11 @@ else:
         sys.path.append(mypath)
 from id import serial_number        
 
+IRQ = 17
 RST = 21        # リセット端子
 LED = 27
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(RST, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(RST, GPIO.IN)
 GPIO.setup(LED, GPIO.OUT)
 GPIO.output(LED, True)
 
@@ -71,7 +72,6 @@ def handle_interrupt(channel):
 	outputfile.close()
 
 
-IRQ = 17
 
 GPIO.setup(IRQ, GPIO.IN)
 GPIO.add_event_detect(IRQ, GPIO.RISING, callback=handle_interrupt)
@@ -91,7 +91,7 @@ try:
                 time.sleep(2.0)
                 GPIO.output(LED, False)
                 if GPIO.input(RST):
-                        os.system(mypath + "../piset/config/set_config.sh");
+                        os.system(mypath + "/../piset/config/set_config.sh");
                         os.system("reboot");
 except KeyboardInterrupt:
         GPIO.cleanup()
