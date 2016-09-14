@@ -151,14 +151,14 @@ pi@10.0.1.26's password: [raspberry]   # 初期パスワード。入力は表示
 
 ## 7. ライブラリのセットアップ
 
-以下のサイトを参考にさせていただきました。（ナチュラル研究所、石川様ありがとうございます）
+以下のサイトを参考にさせていただきました。（感謝）
 
 http://www.ishikawa-lab.com/RasPi_lightning.html
 
 * 雷センサは AS3935 というチップを使用しています。
 * 上記手順に従い以下をおこなっていきます。
 
-** I2C のセットアップ
+ * I2C のセットアップ
 
 `raspi-config` というコマンドを使用して設定します。
 
@@ -171,6 +171,7 @@ http://www.ishikawa-lab.com/RasPi_lightning.html
 `% sudo apt-get -y install python-smbus i2c-tools python-rpi.gpio`
 
 `% sudo apt-get -y install dnsmasq hostapd`
+
 
 
 ## 8. Apache の設定

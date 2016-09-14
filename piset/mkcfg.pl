@@ -53,10 +53,10 @@ static routers=$db{gateway}
 +++
 	;
     }
+    open(F,">",$fn) || die $!;
+    print F $buf;
+    close(F);
 }
-open(F,">",$fn) || die $!;
-print F $buf;
-close(F);
 
 #
 # proxy
