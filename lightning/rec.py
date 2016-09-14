@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# http://www.ishikawa-lab.com/RasPi_lightning.html
+# 参考： http://www.ishikawa-lab.com/RasPi_lightning.html
 # 問い合わせ先：株式会社ウェザニューズ
 # http://weathernews.jp/c/contact.html
 
@@ -41,6 +41,18 @@ sensor.calibrate(tun_cap=0x05)
 if not os.path.exists(mypath + '/spool'):
 	os.mkdir(mypath + '/spool')
 
+def getwlanaddr():
+    from subprocess import Popen, PIPE
+    proc = Popen(["ifconfig","wlan0"], stdout=PIPE, stderr=PIPE)
+    out, err = proc.communicate()
+    import re
+    ptn = re.compile('inet addr:([0-9\.]+)')
+    for line in out.split('\n'):
+        w = ptn.findall(line)
+        if len(w) > 0:
+            return w[0]
+    return ""
+
 def handle_interrupt(channel):
 	time.sleep(0.003)
 	global sensor
@@ -63,7 +75,8 @@ def handle_interrupt(channel):
 		energy = sensor.get_energy()
 		buffer = [now, "lightning!" ,  str(distance)  , str(energy)]
 		writer.writerow(buffer)
-                url = "http://labs.weathernews.jp/hack/lightning/ingest.cgi?id=" + serial_number + "&distance=" + str(distance)  + "&energy=" + str(energy)
+                ipaddr = getwlanaddr()
+                url = "http://labs.weathernews.jp/hack/lightning/ingest.cgi?id=" + serial_number + "&ipaddr=" + ipaddr + "&distance=" + str(distance)  + "&energy=" + str(energy)
                 if os.path.exists(mypath + "/proxy.py"):
                         from proxy import proxies
                         resp = requests.get(url,proxies=proxies)

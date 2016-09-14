@@ -84,7 +84,7 @@
       <main class="mdl-layout__content mdl-color--grey-100 mdl-components__pages">
 
 	<section id="index-section" class="mdl-components-index mdl-components__page">
-	  data
+
 	</section>
 
 	<section id="help-section" class="mdl-components__page">
@@ -216,6 +216,21 @@ $(function(){
 	    document.getElementById("option-2").parentNode.MaterialRadio.check();
 	}
 	document.getElementById("serial").innerHTML = r.serial;
+    });
+
+    $.getJSON('data_count.cgi',function(r){
+	var h = '<table class="mdl-data-table mdl-js-data-table">';
+	h .= '<tbody>';
+	for (var i = 0; i < r.length; i++) {
+	    h .= '<tr>';
+	    h .= '<td>' + r[i].t + '</td>';
+	    h .= '<td>' + r[i].n + '</td>';
+	    h .= '</tr>';
+	}
+	h .= '</tbody>';
+	h .= '</table>';
+	document.getElementById('index-section').innerHTML = h;
+	componentHandler.upgradeDom();
     });
 });
 
