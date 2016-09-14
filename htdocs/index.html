@@ -219,16 +219,18 @@ $(function(){
     });
 
     $.getJSON('data_count.cgi',function(r){
-	var h = '<table class="mdl-data-table mdl-js-data-table">';
-	h .= '<tbody>';
+	var h = '';
+	h += '<div class="docs-text-styling component-title"><p>前10分間の落雷検知個数です</p></div>'
+	h += '<table class="mdl-data-table mdl-js-data-table">';
+	h += '<tbody>';
 	for (var i = 0; i < r.length; i++) {
-	    h .= '<tr>';
-	    h .= '<td>' + r[i].t + '</td>';
-	    h .= '<td>' + r[i].n + '</td>';
-	    h .= '</tr>';
+	    h += '<tr>';
+	    h += '<td>' + r[i].t + '</td>';
+	    h += '<td>' + r[i].n + '</td>';
+	    h += '</tr>';
 	}
-	h .= '</tbody>';
-	h .= '</table>';
+	h += '</tbody>';
+	h += '</table>';
 	document.getElementById('index-section').innerHTML = h;
 	componentHandler.upgradeDom();
     });
