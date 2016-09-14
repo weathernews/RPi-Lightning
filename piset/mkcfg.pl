@@ -6,7 +6,8 @@ if (open(JSON,"$mypath/../htdocs/network.json")) {
     while (<JSON>) {
 	s/[\r\n]//;
 	s/,$//;
-	($k,$v) = split(/[\:]/,$_);
+	my ($k,@vs) = split(/[\:]/,$_);
+	$v = join(":",@vs);
 	$k =~ s/^\"//;
 	$k =~ s/\"$//;
 	$v =~ s/^\"//;
