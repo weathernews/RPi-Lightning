@@ -5,4 +5,4 @@ MYPATH=`dirname $0`
 /bin/rm -f $MYPATH/../lightning/id.py
 /bin/rm -f $MYPATH/../lightning/proxy.py
 /bin/rm -rf $MYPATH/../lightning/spool
-$MYPATH/../htdocs/network_save.cgi init
+#$MYPATH/../htdocs/network_save.cgi init
