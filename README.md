@@ -1,4 +1,4 @@
-# Pi-Lightning
+# RPi-Lightning
 
 Raspberry Pi と、AS3935 を用いた雷センサの制作
 
