@@ -202,14 +202,18 @@ export APACHE_RUN_GROUP=pi
 `  DocumentRoot /home/pi/RPi-Lightning/htdocs`  
 とする
 
+- すべて設定したら、apache 再起動
+```
+# apachectl stop
+# apachectl start
+```
+
 
 ## 9. pip および requests のインストール
 
 ```
-
 # curl -O 'https://bootstrap.pypa.io/get-pip.py'
 # python get-pip.py
 # pip install requests
-
 ```
 
