@@ -182,7 +182,7 @@ http://www.ishikawa-lab.com/RasPi_lightning.html
 - apache2.conf に以下追加
 ```
 
-<Directory /home/pi/Pi-Lightning/htdocs>
+<Directory /home/pi/RPi-Lightning/htdocs>
 	   Options Indexes FollowSymLinks ExecCGI
 	   AllowOverride All
 	   Require all granted
@@ -199,7 +199,7 @@ export APACHE_RUN_GROUP=pi
 
 - mods-enabled/mime.conf で、AddHandler cgi-script .cgi の行を有効にする。
 - sites-enabled/000-default.conf にて
-`  DocumentRoot /home/pi/Pi-Lightning/htdocs`  
+`  DocumentRoot /home/pi/RPi-Lightning/htdocs`  
 とする
 
 
