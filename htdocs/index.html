@@ -69,11 +69,11 @@
     <a href="#network-section" class="mdl-components__link mdl-component network">
       <span class="mdl-components__link-text">Network</span>
     </a>
+    <a href="#location-section" class="mdl-components__link mdl-component location">
+      <span class="mdl-components__link-text">Location</span>
+    </a>
     <a href="#restart-section" class="mdl-components__link mdl-component restart">
       <span class="mdl-components__link-text">Restart</span>
-    </a>
-    <a href="#help-section" class="mdl-components__link mdl-component help">
-      <span class="mdl-components__link-text">Help</span>
     </a>
     <a href="#about-section" class="mdl-components__link mdl-component about">
       <span class="mdl-components__link-text">About</span>
@@ -85,11 +85,29 @@
 	<section id="index-section" class="mdl-components-index mdl-components__page">
 	</section>
 
-	<section id="help-section" class="mdl-components__page mdl-grid">
+	<section id="location-section" class="mdl-components__page mdl-grid">
 	  <div class="mdl-cell mdl-cell--12-col">
 	    <div class="docs-text-styling component-title">
-	      <h3>Help</h3>
+	      <h3>Location</h3>
 	    </div>
+	    <p>位置情報を設定してください。</p>
+	    <form action="#" method="POST" onsubmit="location_save(this);return false;">
+
+	      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		  <input class="mdl-textfield__input" type="text" id="lat">
+		  <label class="mdl-textfield__label" for="lat">緯度</label>
+		</div>
+	      </div>
+	      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		  <input class="mdl-textfield__input" type="text" id="lon">
+		  <label class="mdl-textfield__label" for="lon">経度</label>
+		</div>
+	      </div>
+
+	    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">保存</button><span id="respmsg_loc"></span>
+	    </form>
 	  </div>
 	</section>
 
@@ -127,9 +145,10 @@
 
 	      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		  <input class="mdl-textfield__input" type="text" id="ssid">
+		  <input class="mdl-textfield__input" type="text" id="ssid" onfocus="selfocus();" onblur="selblur();">
 		  <label class="mdl-textfield__label" for="ssid">SSID</label>
 		</div>
+		<div id="selcontainer" style="display:none;"></div>
 	      </div>
 	      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -201,12 +220,49 @@
 	});
     }
 
+    function location_save(form){
+	$.post("location_save.cgi",{
+	    'lat':form.lat.value,
+	    'lon':form.lon.value
+	},function(r){
+	    if (r.stat == "OK") {
+		document.getElementById('respmsg_loc').innerHTML = '保存しました。';
+	    }
+	});
+    }
+
 function restart(){
     $.get('restart.cgi');
     location.hash = '';
 }
 
+function selfocus(){
+    $('#selcontainer').fadeIn(300);    
+}
+function selblur(){
+    $('#selcontainer').fadeOut(300);
+}
+function selssid(selobj){
+    document.getElementById('ssid').value = selobj.getAttribute("value");
+    document.getElementById('ssid').parentNode.classList.add('is-dirty');
+    $('#selcontainer').hide();
+}
+
 $(function(){
+    $.getJSON('network_init.cgi',function(r){
+        var t = '<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp"><tbody>'
+	for(var i = 0; i < r.ssid.length; i++) {
+	    t += '<tr><td class="mdl-data-table__cell--non-numeric" value="' + r.ssid[i] + '" onclick="selssid(this);">' + r.ssid[i] + '</td></tr>';
+	}
+	t += '</table>';
+	$('#selcontainer').html(t);
+	document.getElementById("serial").innerHTML = r.serial;
+	console.log(r.loc.latd);
+	document.getElementById("lat").value = r.loc.latd;
+	document.getElementById("lat").parentNode.classList.add('is-dirty');
+	document.getElementById("lon").value = r.loc.lond;
+	document.getElementById("lon").parentNode.classList.add('is-dirty');
+    });
     $.getJSON('network.json',function(r){
 	var el = ['ssid','passphrase','ipaddr','netmask','gateway','proxy']
 	for (var i in el) {
