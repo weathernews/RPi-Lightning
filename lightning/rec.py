@@ -18,7 +18,8 @@ if mypath == "":
         mypath = "."
 else:
         sys.path.append(mypath)
-from id import serial_number        
+from id import serial_number
+from loc import *
 
 IRQ = 17
 RST = 21        # リセット端子
@@ -76,7 +77,7 @@ def handle_interrupt(channel):
 		buffer = [now, "lightning!" ,  str(distance)  , str(energy)]
 		writer.writerow(buffer)
                 ipaddr = getwlanaddr()
-                url = "http://labs.weathernews.jp/hack/lightning/ingest.cgi?id=" + serial_number + "&ipaddr=" + ipaddr + "&distance=" + str(distance)  + "&energy=" + str(energy)
+                url = "http://labs.weathernews.jp/hack/lightning/ingest.cgi?id=" + serial_number + "&lat=" + location_lat + "&lon=" + location_lon + "&ipaddr=" + ipaddr + "&distance=" + str(distance)  + "&energy=" + str(energy)
                 if os.path.exists(mypath + "/proxy.py"):
                         from proxy import proxies
                         resp = requests.get(url,proxies=proxies)
