@@ -25,7 +25,6 @@ IRQ = 17
 RST = 21        # リセット端子
 LED = 27
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(RST, GPIO.IN)
 GPIO.setup(LED, GPIO.OUT)
 GPIO.output(LED, True)
 
@@ -104,9 +103,6 @@ try:
         while True:
                 time.sleep(2.0)
                 GPIO.output(LED, False)
-                if GPIO.input(RST):
-                        os.system(mypath + "/../piset/config/set_config.sh");
-                        os.system("reboot");
 except KeyboardInterrupt:
         GPIO.cleanup()
 
