@@ -26,4 +26,5 @@ if (pinstat == GPIO.HIGH):
         GPIO.output(LED,GPIO.LOW)
         time.sleep(0.1)
         GPIO.cleanup()
+    print " rebooting... "
     os.system("reboot")
