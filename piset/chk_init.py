@@ -15,7 +15,8 @@ pinstat = GPIO.input(RST)
 if (pinstat == GPIO.HIGH):
 
     ret = os.system("cmp /home/pi/RPi-Lightning/piset/config/self_ap/etc/network/interfaces  /etc/network/interfaces");
-    if (ret == 0):	# already initialized
+    if (ret == 0):
+	print " already initialized... "
         GPIO.cleanup()
         exit(0)
 
