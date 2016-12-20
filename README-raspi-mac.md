@@ -96,7 +96,7 @@ else
 fi
 for i in `seq 1 254`
 do
-    ping -c 1 -t 1 ${NET}.$i &
+    ping -c 1 -t 1 ${NET}.$i >/dev/null 2>&1 &
 done
 
 ```
