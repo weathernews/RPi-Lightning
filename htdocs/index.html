@@ -296,6 +296,16 @@ $(function(){
     });
 });
 
+var restart_section_displayed = false;
+setInterval(function(){
+        var o = document.getElementById('restart-section');
+        var a = o.classList.contains('is-active');
+        if (a && restart_section_displayed == false){
+                $(o).offset({top:0,left:0});
+        }
+        restart_section_displayed = a;
+},1000);
+
     </script>
   </body>
 </html>
