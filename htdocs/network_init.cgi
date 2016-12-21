@@ -15,10 +15,10 @@ if ($ifcfg =~ /HWaddr ([0-9a-f:]+)/) {
     $x5 = hex($w[5]);
     $sn = $x3 * 65536 + $x4 + 256 + $x5;
 }
-if (open(F,">$mypath/../lightning/id.py")) {
-    print F qq(serial_number = "$sn"\n);
-    close(F);
-}
+#if (open(F,">$mypath/../lightning/id.py")) {
+#    print F qq(serial_number = "$sn"\n);
+#    close(F);
+#}
 
 open(OUT,">$mypath/wlan.txt");
 open(PROC, "sudo iwlist wlan0 scan|");
