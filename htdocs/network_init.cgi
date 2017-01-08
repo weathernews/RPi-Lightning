@@ -47,13 +47,13 @@ $json = qq({"loc":);
 open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
 $_resp = "";
 while (<PROC>){
-    s/"lat"/"latd"/;
-    s/"lon"/"lond"/;
     $_resp .= $_;
 }
 close(PROC);
 if (open(J,"$mypath/location.json")) {
     while (<J>){
+	s/"lat"/"latd"/;
+	s/"lon"/"lond"/;
 	$json .= $_;
     }
     close(J);
