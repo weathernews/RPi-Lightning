@@ -7,18 +7,14 @@ print $q->header(-expires       => "now",
 		 -content_type  => "application/json",
 		 -charset       => "utf-8");
 
-$ifcfg = `ifconfig eth0`;
-if ($ifcfg =~ /HWaddr ([0-9a-f:]+)/) {
-    @w = split(/:/,$1);
-    $x3 = hex($w[3]);
-    $x4 = hex($w[4]);
-    $x5 = hex($w[5]);
-    $sn = $x3 * 65536 + $x4 + 256 + $x5;
+if (open($fh,"$mypath/../lightning/id.py")) {
+    while (<$fh>) {
+	if (/serial_number = \"(.*)\"/) {
+	    $sn = $1;
+	}
+    }
+    close($fh);
 }
-#if (open(F,">$mypath/../lightning/id.py")) {
-#    print F qq(serial_number = "$sn"\n);
-#    close(F);
-#}
 
 $mdtm = (stat("$mypath/wlan.txt"))[9];
 if ((time - $mdtm) > (86400 * 30)) {
@@ -41,11 +37,18 @@ if ((time - $mdtm) > (86400 * 30)) {
     close(PROC);
     close(OUT);
 }
+else {
+    open($fh,"$mypath/wlan.txt");
+    while (<$fh>) {
+	($maca,$ssid) = split(/[\t\r\n]/,$_);
+	push(@mlst, "$maca");
+	push(@slst, "$ssid") if ($ssid ne "");
+    }
+    close($fh);
+}
 
 $sstr = '"' . join('","',@slst) . '"';
-$mstr = join(",",@mlst);
-$mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
-$mstr =~ s/ /+/g;
+
 $json = qq({"loc":);
 if (open(J,"$mypath/location.json")) {
     while (<J>){
@@ -56,6 +59,9 @@ if (open(J,"$mypath/location.json")) {
     close(J);
 }
 else {
+    $mstr = join(",",@mlst);
+    $mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
+    $mstr =~ s/ /+/g;
     open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
     $_resp = "";
     while (<PROC>){
