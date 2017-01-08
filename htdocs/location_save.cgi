@@ -8,22 +8,19 @@ $p = $q->Vars;
 print $q->header(-content_type => "application/json");
 
 if (($p->{'lat'} ne "") && ($p->{'lon'} ne "")) {
-    if (open(JSON,">$mypath/location.json")) {
-	$lat = $p->{'lat'};
-	$lon = $p->{'lon'};
-	print JSON << "+++";
-{
-"latd":"$lat",
-"lond":"$lon"
-}
-+++
-	;
-close(JSON);
+    $lat = $p->{'lat'};
+    $lon = $p->{'lon'};
+    if (open($fh,">$mypath/location.json")) {
+	print $fh qq({\n);
+	print $fh qq("latd":"$lat",\n);
+	print $fh qq("lond":"$lon"\n);
+	print $fh qq(}\n);
+	close($fh);
 
-	if (open(F,">$mypath/../lightning/loc.py")) {
-	    print F qq(location_lat = "$lat"\n);
-	    print F qq(location_lon = "$lon"\n);
-	    close(F);
+	if (open($fh,">","$mypath/../lightning/loc.py")) {
+	    print $fh qq(location_lat = "$lat"\n);
+	    print $fh qq(location_lon = "$lon"\n);
+	    close($fh);
 	}
     }
     print qq({"stat":"OK"});

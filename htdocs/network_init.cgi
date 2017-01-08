@@ -77,10 +77,17 @@ else {
     if ($_resp =~ /"lond":([0-9\.\-]*)/) {
 	$lon = $1;
     }
-    if (open(F,">$mypath/../lightning/loc.py")) {
-	print F qq(location_lat = "$lat"\n);
-	print F qq(location_lon = "$lon"\n);
-	close(F);
+    if (open($fh,">","$mypath/../lightning/loc.py")) {
+	print $fh qq(location_lat = "$lat"\n);
+	print $fh qq(location_lon = "$lon"\n);
+	close($fh);
+    }
+    if (open($fh,">$mypath/location.json")) {
+	print $fh qq({\n);
+	print $fh qq("latd":"$lat",\n);
+	print $fh qq("lond":"$lon"\n);
+	print $fh qq(}\n);
+	close($fh);
     }
 }
 
