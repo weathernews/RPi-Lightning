@@ -17,6 +17,7 @@ if (($p->{'ssid'} ne "") || ($ARGV[0] eq "init")) {
 "netmask":"$p->{'netmask'}",
 "gateway":"$p->{'gateway'}",
 "proxy":"$p->{'proxy'}"
+"nameserver":"$p->{'nameserver'}"
 }
 +++
 	;
