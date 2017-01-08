@@ -44,12 +44,6 @@ $mstr = join(",",@mlst);
 $mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
 $mstr =~ s/ /+/g;
 $json = qq({"loc":);
-open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
-$_resp = "";
-while (<PROC>){
-    $_resp .= $_;
-}
-close(PROC);
 if (open(J,"$mypath/location.json")) {
     while (<J>){
 	s/"lat"/"latd"/;
@@ -59,6 +53,13 @@ if (open(J,"$mypath/location.json")) {
     close(J);
 }
 else {
+    open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
+    $_resp = "";
+    while (<PROC>){
+	$_resp .= $_;
+    }
+    close(PROC);
+
     $json .= $_resp;
 
     if ($_resp =~ /"latd":([0-9\.\-]*)/) {
