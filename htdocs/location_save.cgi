@@ -13,8 +13,8 @@ if (($p->{'lat'} ne "") && ($p->{'lon'} ne "")) {
 	$lon = $p->{'lon'};
 	print JSON << "+++";
 {
-"lat":"$lat",
-"lon":"$lon"
+"latd":"$lat",
+"lond":"$lon"
 }
 +++
 	;
