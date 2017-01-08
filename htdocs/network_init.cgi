@@ -20,24 +20,27 @@ if ($ifcfg =~ /HWaddr ([0-9a-f:]+)/) {
 #    close(F);
 #}
 
-open(OUT,">$mypath/wlan.txt");
-open(PROC, "sudo iwlist wlan0 scan|");
-@mlst = ();
-@slst = ();
-while (<PROC>) {
-    if (/Address: ([0-9A-F:]{17})/) {
-	$ssid = "";
-	$maca = $1;
-	push(@mlst, "$maca");
+$mdtm = (stat("$mypath/wlan.txt"))[9];
+if ((time - $mdtm) > (86400 * 30)) {
+    open(OUT,">$mypath/wlan.txt");
+    open(PROC, "sudo iwlist wlan0 scan|");
+    @mlst = ();
+    @slst = ();
+    while (<PROC>) {
+	if (/Address: ([0-9A-F:]{17})/) {
+	    $ssid = "";
+	    $maca = $1;
+	    push(@mlst, "$maca");
+	}
+	if (/ESSID:"(.*)"/) {
+	    $ssid = $1;
+	    print OUT "$maca\t$ssid\n";
+	    push(@slst, "$ssid") if ($ssid ne "");
+	}
     }
-    if (/ESSID:"(.*)"/) {
-	$ssid = $1;
-	print OUT "$maca\t$ssid\n";
-	push(@slst, "$ssid") if ($ssid ne "");
-    }
+    close(PROC);
+    close(OUT);
 }
-close(PROC);
-close(OUT);
 
 $sstr = '"' . join('","',@slst) . '"';
 $mstr = join(",",@mlst);
