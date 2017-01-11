@@ -1,6 +1,6 @@
 #! /bin/sh
 while true
 do
-	/root/rec.py
+	/home/pi/RPi-Lightning/lightning/rec.py
 	sleep 1
 done
