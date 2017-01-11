@@ -93,7 +93,7 @@ else {
 
 
 $json .= qq(,"ssid":[$sstr]);
-$json .= qq(,"serial":$sn);
+$json .= qq(,"serial":"$sn");
 $json .= "}";
 
 print $json;
