@@ -1,1 +1,2 @@
 0 0 * * * /home/pi/RPi-Lightning/update.sh
+0 2 * * * /home/pi/RPi-Lightning/lightning/keepalive.py
