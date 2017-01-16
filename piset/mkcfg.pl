@@ -50,6 +50,7 @@ if (open(F,"<",$fn)){
 interface wlan0
 static ip_address=$db{ipaddr}/24
 static routers=$db{gateway}
+static domain_name_servers=$db{"nameserver"}
 +++
 	;
     }
@@ -75,12 +76,3 @@ else {
     unlink("$mypath/../lightning/proxy.py");
 }
 
-#
-# resolv.conf
-#
-if ($db{"nameserver"} ne "") {
-    $fn = "$mypath/config/wifi_client/etc/resolv.conf";
-    open(F,">",$fn) || die $!;
-    print F qq(nameserver $db{"nameserver"}\n);
-    close(F);
-}
