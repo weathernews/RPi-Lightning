@@ -16,6 +16,11 @@ if (open(JSON,"$mypath/../htdocs/network.json")) {
     }
 }
 
+if (open($fh,"<","$mypath/../piset/np.txt")) {
+    $db{"passphrase"} = <$fh>;
+    close($fh);
+}
+
 #
 # wpa_supplicant
 #
