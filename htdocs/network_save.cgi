@@ -11,7 +11,7 @@ if (($p->{'ssid'} ne "") || ($ARGV[0] eq "init")) {
 {
 "serial":"$sn",
 "ssid":"$p->{'ssid'}",
-"passphrase":"$p->{'passphrase'}",
+"passphrase":"****",
 "addrtype":"$p->{'addrtype'}",
 "ipaddr":"$p->{'ipaddr'}",
 "netmask":"$p->{'netmask'}",
@@ -25,6 +25,9 @@ close(JSON);
     }
 }
 
+open($fh,">","$mypath/../piset/np.txt");
+print $fh $p->{'passphrase'};
+close($fh);
 
 print $q->header(-content_type => "application/json");
 if ($p->{'ssid'} ne "") {

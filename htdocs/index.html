@@ -286,7 +286,7 @@ $(function(){
 
     $.getJSON('data_count.cgi',function(r){
 	var h = '';
-	h += '<div class="docs-text-styling component-title"><p>前10分間の落雷検知個数です</p></div>'
+	h += '<div class="docs-text-styling component-title"><p>10分ごとにまとめた落雷件数です</p></div>'
 	h += '<table class="mdl-data-table mdl-js-data-table">';
 	h += '<tbody>';
 	for (var i = 0; i < r.length; i++) {
