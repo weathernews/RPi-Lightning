@@ -20,7 +20,7 @@ $lastf = pop(@files);
 if (open(F,"$spld/$lastf")) {
     while (<F>){
 	@w = split(/[,\r\n]/,$_);
-	next if ($w[1] !~ /lightning/);
+	next if ($w[1] !~ /lightning!/);
 	$t0 = $w[0];
 	my($yy,$mm,$dd,$hh,$mn,$ss) = split(/[^0-9]+/,$t0);
 	my $tm = timelocal($ss,$mn,$hh,$dd,$mm-1,$yy-1900);
