@@ -20,7 +20,7 @@ from loc import *
 
 def getwlanaddr():
     from subprocess import Popen, PIPE
-    proc = Popen(["ifconfig","wlan0"], stdout=PIPE, stderr=PIPE)
+    proc = Popen(["/sbin/ifconfig","wlan0"], stdout=PIPE, stderr=PIPE)
     out, err = proc.communicate()
     import re
     ptn = re.compile('inet addr:([0-9\.]+)')
