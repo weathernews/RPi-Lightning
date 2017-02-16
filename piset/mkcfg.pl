@@ -32,6 +32,7 @@ if (($db{"ssid"} ne "") && (length($db{"passphrase"}) >= 6)) {
 country=JP
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
+scan_ssid=1
 +++
 ;
     close(F);
