@@ -16,7 +16,7 @@ if (($p->{'ssid'} ne "") || ($ARGV[0] eq "init")) {
 "ipaddr":"$p->{'ipaddr'}",
 "netmask":"$p->{'netmask'}",
 "gateway":"$p->{'gateway'}",
-"proxy":"$p->{'proxy'}"
+"proxy":"$p->{'proxy'}",
 "nameserver":"$p->{'nameserver'}"
 }
 +++
