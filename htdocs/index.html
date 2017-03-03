@@ -270,7 +270,7 @@ $(function(){
 	document.getElementById("lon").parentNode.classList.add('is-dirty');
     });
     $.getJSON('network.json',function(r){
-	var el = ['ssid','passphrase','ipaddr','netmask','gateway','proxy']
+	var el = ['ssid','passphrase','ipaddr','netmask','gateway','proxy','nameserver']
 	for (var i in el) {
 	    var e = el[i];
 	    if (r[e] != "") {
