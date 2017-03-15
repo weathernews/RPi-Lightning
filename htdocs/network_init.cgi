@@ -17,7 +17,7 @@ if (open($fh,"$mypath/../lightning/id.py")) {
 }
 
 $mdtm = (stat("$mypath/wlan.txt"))[9];
-if ((time - $mdtm) > (86400 * 30)) {
+if ((time - $mdtm) > (43200)) {
     open(OUT,">$mypath/wlan.txt");
     open(PROC, "sudo iwlist wlan0 scan|");
     @mlst = ();
@@ -51,7 +51,7 @@ $sstr = '"' . join('","',@slst) . '"';
 
 $json = qq({"loc":);
 $mdtm = (stat("$mypath/location.json"))[9];
-if (((time - $mdtm) < 86400) && (open(J,"$mypath/location.json"))) {
+if (((time - $mdtm) < 43200) && (open(J,"$mypath/location.json"))) {
     while (<J>){
 	s/"lat"/"latd"/;
 	s/"lon"/"lond"/;
@@ -60,35 +60,36 @@ if (((time - $mdtm) < 86400) && (open(J,"$mypath/location.json"))) {
     close(J);
 }
 else {
-    $mstr = join(",",@mlst);
-    $mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
-    $mstr =~ s/ /+/g;
-    open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
-    $_resp = "";
-    while (<PROC>){
-	$_resp .= $_;
-    }
-    close(PROC);
+    if ($#mlst >= 0) { 
+	$mstr = join(",",@mlst);
+	$mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
+	$mstr =~ s/ /+/g;
+	open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
+	$_resp = "";
+	while (<PROC>){
+	    $_resp .= $_;
+	}
+	close(PROC);
+	$json .= $_resp;
 
-    $json .= $_resp;
-
-    if ($_resp =~ /"latd":([0-9\.\-]*)/) {
-	$lat = $1;
-    }
-    if ($_resp =~ /"lond":([0-9\.\-]*)/) {
-	$lon = $1;
-    }
-    if (open($fh,">","$mypath/../lightning/loc.py")) {
-	print $fh qq(location_lat = "$lat"\n);
-	print $fh qq(location_lon = "$lon"\n);
-	close($fh);
-    }
-    if (open($fh,">$mypath/location.json")) {
-	print $fh qq({\n);
-	print $fh qq("latd":"$lat",\n);
-	print $fh qq("lond":"$lon"\n);
-	print $fh qq(}\n);
-	close($fh);
+	if ($_resp =~ /"latd":([0-9\.\-]*)/) {
+	    $lat = $1;
+	}
+	if ($_resp =~ /"lond":([0-9\.\-]*)/) {
+	    $lon = $1;
+	}
+	if (open($fh,">","$mypath/../lightning/loc.py")) {
+	    print $fh qq(location_lat = "$lat"\n);
+	    print $fh qq(location_lon = "$lon"\n);
+	    close($fh);
+	}
+	if (open($fh,">$mypath/location.json")) {
+	    print $fh qq({\n);
+	    print $fh qq("latd":"$lat",\n);
+	    print $fh qq("lond":"$lon"\n);
+	    print $fh qq(}\n);
+	    close($fh);
+	}
     }
 }
 
