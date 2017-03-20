@@ -51,7 +51,7 @@ $sstr = '"' . join('","',@slst) . '"';
 
 $json = qq({"loc":);
 $mdtm = (stat("$mypath/location.json"))[9];
-if (((time - $mdtm) < 43200) && (open(J,"$mypath/location.json"))) {
+if (((time - $mdtm) < 86400) && (open(J,"$mypath/location.json"))) {
     while (<J>){
 	s/"lat"/"latd"/;
 	s/"lon"/"lond"/;
@@ -90,6 +90,9 @@ else {
 	    print $fh qq(}\n);
 	    close($fh);
 	}
+    }
+    else {
+	$json .= qq({});
     }
 }
 
