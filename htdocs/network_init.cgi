@@ -51,33 +51,25 @@ $sstr = '"' . join('","',@slst) . '"';
 
 $json = qq({"loc":);
 $mdtm = (stat("$mypath/location.json"))[9];
-if (((time - $mdtm) < 86400) && (open(J,"$mypath/location.json"))) {
-    while (<J>){
-	s/"lat"/"latd"/;
-	s/"lon"/"lond"/;
-	$json .= $_;
+if (((time - $mdtm) > 86400) && ($#mlst >= 0)) { 
+    $mstr = join(",",@mlst);
+    $mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
+    $mstr =~ s/ /+/g;
+    open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
+    $_resp = "";
+    while (<PROC>){
+	$_resp .= $_;
     }
-    close(J);
-}
-else {
-    if ($#mlst >= 0) { 
-	$mstr = join(",",@mlst);
-	$mstr =~ s/([^ 0-9a-zA-Z])/"%".uc(unpack("H2",$1))/eg;
-	$mstr =~ s/ /+/g;
-	open(PROC,"curl -s 'http://mwschat.wni.co.jp:8001/wlid.cgi?u=${sn}&m=${mstr}' |");
-	$_resp = "";
-	while (<PROC>){
-	    $_resp .= $_;
-	}
-	close(PROC);
-	$json .= $_resp;
+    close(PROC);
+    $json .= $_resp;
 
-	if ($_resp =~ /"latd":([0-9\.\-]*)/) {
-	    $lat = $1;
-	}
-	if ($_resp =~ /"lond":([0-9\.\-]*)/) {
-	    $lon = $1;
-	}
+    if ($_resp =~ /"latd":([0-9\.\-]*)/) {
+	$lat = $1;
+    }
+    if ($_resp =~ /"lond":([0-9\.\-]*)/) {
+	$lon = $1;
+    }
+    if (($lat > 20) && ($lat < 50) && ($lon > 120) && ($lon < 150)) {
 	if (open($fh,">","$mypath/../lightning/loc.py")) {
 	    print $fh qq(location_lat = "$lat"\n);
 	    print $fh qq(location_lon = "$lon"\n);
@@ -90,6 +82,16 @@ else {
 	    print $fh qq(}\n);
 	    close($fh);
 	}
+    }
+}
+else {
+    if (open(my $fh,"<","$mypath/location.json")) {
+	while (<$fh>){
+	    s/"lat"/"latd"/;
+	    s/"lon"/"lond"/;
+	    $json .= $_;
+	}
+	close($fh);
     }
     else {
 	$json .= qq({});
